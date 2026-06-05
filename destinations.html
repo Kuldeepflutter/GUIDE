@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Destinations — GuideGo</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@600;700;800&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script><script>tailwind.config={darkMode:'class'}</script>
+<link rel="stylesheet" href="https://unpkg.com/aos@2.3.4/dist/aos.css"/>
+<link rel="stylesheet" href="style.css"/>
+<script src="theme.js"></script>
+</head>
+<body>
+<section style="padding:30px 0 20px">
+  <div class="container-x">
+    <h1 style="font-family:'Space Grotesk';font-size:2.4rem;font-weight:800" data-reveal>Discover destinations</h1>
+    <p style="color:var(--text-soft);margin-top:6px" data-reveal>Hand-picked Indian destinations with local guides ready to host you.</p>
+
+    <div class="glass" style="margin-top:20px;padding:14px;display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr auto;gap:10px;align-items:center" data-reveal>
+      <div class="neo-inset" style="padding:.5rem .8rem;display:flex;align-items:center;gap:.5rem"><i data-lucide="search" style="width:16px;height:16px;color:var(--primary)"></i><input id="fSearch" class="bg-transparent outline-none w-full text-sm" placeholder="Search destinations..."/></div>
+      <select id="fCategory" class="input" style="padding:.55rem .8rem;border-radius:12px"><option value="">All categories</option></select>
+      <select id="fBudget" class="input" style="padding:.55rem .8rem;border-radius:12px"><option value="">Any budget</option><option value="8000">Under ₹8,000</option><option value="15000">Under ₹15,000</option><option value="100000">Premium</option></select>
+      <select id="fSeason" class="input" style="padding:.55rem .8rem;border-radius:12px"><option value="">Any season</option><option>Nov–Feb</option><option>Mar–Jun</option><option>Jul–Sep</option></select>
+      <button class="btn btn-primary btn-sm" onclick="applyFilters()"><i data-lucide="filter" style="width:14px;height:14px"></i></button>
+    </div>
+  </div>
+</section>
+
+<section style="padding:20px 0 60px">
+  <div class="container-x">
+    <div id="destGrid" data-stagger style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:20px"></div>
+  </div>
+</section>
+
+<!-- Group Tours -->
+<section style="padding:30px 0" id="groups">
+  <div class="container-x">
+    <div style="display:flex;justify-content:space-between;align-items:end;margin-bottom:24px" data-reveal>
+      <div>
+        <span class="badge"><i data-lucide="users" style="width:12px;height:12px;color:var(--primary)"></i> Group tours</span>
+        <h2 style="font-family:'Space Grotesk';font-size:2rem;font-weight:800;margin-top:8px">Join a group, share the journey</h2>
+      </div>
+    </div>
+    <div data-stagger style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:18px" id="groupGrid"></div>
+  </div>
+</section>
+
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+<script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="script.js"></script><script src="chatbot.js"></script><script src="animations.js"></script>
+<script>
+const grid = document.getElementById('destGrid');
+const fCat = document.getElementById('fCategory');
+GG.categories.forEach(c => fCat.insertAdjacentHTML('beforeend', `<option>${c}</option>`));
+function render(list){
+  grid.innerHTML = list.map(d=>`
+    <div class="card">
+      <div style="position:relative;height:200px"><img src="${d.img}" style="width:100%;height:100%;object-fit:cover"/>
+        <span class="badge" style="position:absolute;top:12px;left:12px;background:rgba(255,255,255,.9);color:#0b1a2b">⭐ ${d.rating}</span></div>
+      <div style="padding:16px">
+        <div style="display:flex;justify-content:space-between;align-items:center"><b style="font-family:'Space Grotesk';font-size:1.15rem">${d.name}</b><span style="color:var(--primary);font-weight:700">${GG.INR(d.cost)}</span></div>
+        <div style="font-size:.78rem;color:var(--text-soft);margin:4px 0 10px">${d.state} • Best: ${d.season}</div>
+        <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px">${d.tags.map(t=>`<span class="badge">${t}</span>`).join('')}</div>
+        <a href="booking.html?dest=${d.id}" class="btn btn-primary btn-sm" style="width:100%;justify-content:center">Plan trip <i data-lucide="arrow-right" style="width:14px;height:14px"></i></a>
+      </div>
+    </div>`).join('');
+  if (window.lucide) lucide.createIcons();
+}
+function applyFilters(){
+  const s = (document.getElementById('fSearch').value||'').toLowerCase();
+  const cat = fCat.value; const bud = +document.getElementById('fBudget').value || 0;
+  const sea = document.getElementById('fSeason').value;
+  render(GG.destinations.filter(d => (!s || d.name.toLowerCase().includes(s) || d.state.toLowerCase().includes(s))
+    && (!cat || d.category===cat) && (!bud || d.cost<=bud) && (!sea || d.season===sea)));
+}
+document.getElementById('fSearch').addEventListener('input', applyFilters);
+[fCat, document.getElementById('fBudget'), document.getElementById('fSeason')].forEach(e=>e.addEventListener('change',applyFilters));
+render(GG.destinations);
+
+// Group tours
+document.getElementById('groupGrid').innerHTML = GG.destinations.slice(0,6).map(d=>{
+  const cap = 25, booked = Math.floor(Math.random()*22)+3, pct = booked/cap*100;
+  return `<div class="card">
+    <div style="height:160px;background:url(${d.img}) center/cover"></div>
+    <div style="padding:16px">
+      <div style="display:flex;justify-content:space-between;align-items:center"><b>${d.name} Group Tour</b><span class="badge badge-hot">Trending</span></div>
+      <div style="font-size:.78rem;color:var(--text-soft);margin:4px 0 10px">7 days • Departs every Friday</div>
+      <div class="progress"><span style="width:${pct}%"></span></div>
+      <div style="display:flex;justify-content:space-between;font-size:.78rem;margin-top:6px;color:var(--text-soft)"><span>${booked}/${cap} booked</span><span>${cap-booked} seats left</span></div>
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-top:14px"><span style="font-weight:800;color:var(--primary);font-size:1.1rem">${GG.INR(d.cost)}</span><a href="booking.html?dest=${d.id}" class="btn btn-primary btn-sm">Join group</a></div>
+    </div></div>`;
+}).join('');
+
+GG.boot('destinations');
+</script>
+</body></html>

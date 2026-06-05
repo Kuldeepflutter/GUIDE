@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Your Dashboard — GuideGo</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@600;700;800&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script><script>tailwind.config={darkMode:'class'}</script>
+<link rel="stylesheet" href="https://unpkg.com/aos@2.3.4/dist/aos.css"/>
+<link rel="stylesheet" href="style.css"/>
+<script src="theme.js"></script>
+</head>
+<body>
+<section style="padding:30px 0 60px">
+  <div class="container-x">
+    <div style="display:flex;justify-content:space-between;align-items:end;flex-wrap:wrap;gap:14px" data-reveal>
+      <div>
+        <h1 style="font-family:'Space Grotesk';font-size:2.2rem;font-weight:800" id="dashHi">Welcome back 👋</h1>
+        <p style="color:var(--text-soft)">Here's what's coming up.</p>
+      </div>
+      <div style="display:flex;gap:8px">
+        <button class="btn btn-neo btn-sm"><i data-lucide="bell" style="width:14px;height:14px"></i> Notifications</button>
+        <a href="booking.html" class="btn btn-primary btn-sm"><i data-lucide="plus" style="width:14px;height:14px"></i> New booking</a>
+      </div>
+    </div>
+
+    <!-- Stats -->
+    <div data-stagger style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px;margin-top:24px">
+      <div class="glass" style="padding:18px"><div style="font-size:.78rem;color:var(--text-soft)">Upcoming trips</div><div style="font-family:'Space Grotesk';font-size:1.8rem;font-weight:800">2</div></div>
+      <div class="glass" style="padding:18px"><div style="font-size:.78rem;color:var(--text-soft)">Total trips</div><div style="font-family:'Space Grotesk';font-size:1.8rem;font-weight:800">14</div></div>
+      <div class="glass" style="padding:18px"><div style="font-size:.78rem;color:var(--text-soft)">Saved destinations</div><div style="font-family:'Space Grotesk';font-size:1.8rem;font-weight:800">4</div></div>
+      <div class="glass" style="padding:18px"><div style="font-size:.78rem;color:var(--text-soft)">Loyalty points</div><div style="font-family:'Space Grotesk';font-size:1.8rem;font-weight:800;color:var(--warm)">2,480</div></div>
+    </div>
+
+    <div style="display:grid;grid-template-columns:1.4fr .9fr;gap:20px;margin-top:24px" id="dashGrid">
+      <!-- Upcoming -->
+      <div class="glass" style="padding:24px" data-reveal>
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px">
+          <h3 style="font-weight:700">Upcoming trips</h3><a href="#" style="font-size:.82rem;color:var(--primary);font-weight:600">View all</a>
+        </div>
+        <div id="upList" data-stagger style="display:grid;gap:12px"></div>
+      </div>
+
+      <!-- Wishlist -->
+      <div class="glass" style="padding:24px" data-reveal>
+        <h3 style="font-weight:700;margin-bottom:14px">Wishlist</h3>
+        <div id="wishList" data-stagger style="display:grid;gap:10px"></div>
+      </div>
+    </div>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:20px" id="dashGrid2">
+      <!-- History -->
+      <div class="glass" style="padding:24px" data-reveal>
+        <h3 style="font-weight:700;margin-bottom:14px">Booking history</h3>
+        <div id="histList" data-stagger style="display:grid;gap:10px"></div>
+      </div>
+
+      <!-- Trip Planner -->
+      <div class="glass" style="padding:24px" data-reveal>
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px">
+          <h3 style="font-weight:700">Trip planner</h3>
+          <button class="btn btn-primary btn-sm" onclick="addPlan()"><i data-lucide="plus" style="width:14px;height:14px"></i> Add day</button>
+        </div>
+        <div id="planList" style="display:grid;gap:10px"></div>
+      </div>
+    </div>
+
+    <!-- Loyalty / referral / weather row -->
+    <div data-stagger style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px;margin-top:20px">
+      <div class="glass" style="padding:20px"><div style="display:flex;justify-content:space-between"><div style="font-weight:700">Weather widget</div><i data-lucide="cloud-sun" style="width:18px;height:18px;color:var(--warm)"></i></div><div style="font-family:'Space Grotesk';font-size:1.8rem;font-weight:800;margin-top:6px">28°C · Jaipur</div><div style="font-size:.78rem;color:var(--text-soft)">Sunny • Light breeze</div></div>
+      <div class="glass" style="padding:20px"><div style="display:flex;justify-content:space-between"><div style="font-weight:700">Currency</div><i data-lucide="indian-rupee" style="width:18px;height:18px;color:var(--primary)"></i></div><div style="font-family:'Space Grotesk';font-size:1.8rem;font-weight:800;margin-top:6px">₹1 = $0.012</div><div style="font-size:.78rem;color:var(--text-soft)">Live rate</div></div>
+      <div class="glass" style="padding:20px"><div style="display:flex;justify-content:space-between"><div style="font-weight:700">Referral</div><i data-lucide="gift" style="width:18px;height:18px;color:var(--accent)"></i></div><div style="font-family:'Space Grotesk';font-size:1.2rem;font-weight:800;margin-top:6px">Invite & earn ₹500</div><button class="btn btn-neo btn-sm" style="margin-top:6px" onclick="GG.toast('Code copied: GG-DEMO')">Copy code</button></div>
+    </div>
+  </div>
+</section>
+
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+<script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="script.js"></script><script src="chatbot.js"></script><script src="dashboard.js"></script><script src="animations.js"></script>
+<script>
+const u = GG.session(); if (u) document.getElementById('dashHi').textContent = `Welcome back, ${u.name.split(' ')[0]} 👋`;
+document.getElementById('upList').innerHTML = GG_dashboard.upcoming.map(t=>`
+  <div class="card" style="display:flex;align-items:center;gap:14px;padding:12px" data-reveal>
+    <div style="width:80px;height:80px;border-radius:14px;background:url(${t.img}) center/cover;flex-shrink:0"></div>
+    <div style="flex:1"><b>${t.dest}</b><div style="font-size:.78rem;color:var(--text-soft)">${t.date} • Guide: ${t.guide}</div>
+    <span class="badge" style="margin-top:6px;background:rgba(16,185,129,.15);color:var(--accent);border-color:transparent">${t.status}</span></div>
+    <button class="btn btn-neo btn-sm" onclick="GG.toast('Opening QR pass')"><i data-lucide="qr-code" style="width:14px;height:14px"></i></button>
+  </div>`).join('');
+
+document.getElementById('wishList').innerHTML = GG_dashboard.wishlist.map(id=>{
+  const d = GG.destinations.find(x=>x.id===id); if(!d) return '';
+  return `<a href="destinations.html" class="card" style="display:flex;align-items:center;gap:12px;padding:10px" data-reveal>
+    <div style="width:54px;height:54px;border-radius:10px;background:url(${d.img}) center/cover"></div>
+    <div style="flex:1"><b>${d.name}</b><div style="font-size:.74rem;color:var(--text-soft)">${d.state} • ${GG.INR(d.cost)}</div></div>
+    <i data-lucide="heart" style="width:16px;height:16px;color:var(--danger);fill:currentColor"></i>
+  </a>`;
+}).join('');
+
+document.getElementById('histList').innerHTML = GG_dashboard.history.map(h=>`
+  <div class="card" style="display:flex;align-items:center;gap:12px;padding:12px" data-reveal>
+    <div style="width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,var(--primary),var(--primary-2));display:grid;place-items:center;color:#fff"><i data-lucide="map-pin" style="width:18px;height:18px"></i></div>
+    <div style="flex:1"><b>${h.dest}</b><div style="font-size:.74rem;color:var(--text-soft)">${h.date} • ${h.guide}</div></div>
+    <div style="text-align:right"><b>${GG.INR(h.amount)}</b><div style="font-size:.7rem;color:var(--warm)">${'★'.repeat(h.rating)}</div></div>
+  </div>`).join('');
+
+let plans = JSON.parse(localStorage.getItem('gg-plans') || '[]');
+function renderPlans(){
+  const w = document.getElementById('planList');
+  if (!plans.length){ w.innerHTML = '<div style="color:var(--text-soft);font-size:.86rem;text-align:center;padding:20px">No plan yet. Start your itinerary!</div>'; return; }
+  w.innerHTML = plans.map((p,i)=>`<div class="card" style="padding:12px;display:flex;align-items:center;gap:10px">
+    <div style="width:32px;height:32px;border-radius:8px;background:linear-gradient(135deg,var(--primary),var(--primary-2));color:#fff;display:grid;place-items:center;font-weight:700;font-size:.85rem">${i+1}</div>
+    <input class="bg-transparent outline-none" value="${p}" style="flex:1;font-weight:600" onchange="plans[${i}]=this.value;localStorage.setItem('gg-plans',JSON.stringify(plans))"/>
+    <button class="btn btn-ghost btn-sm" onclick="plans.splice(${i},1);localStorage.setItem('gg-plans',JSON.stringify(plans));renderPlans()"><i data-lucide="trash-2" style="width:14px;height:14px"></i></button>
+  </div>`).join('');
+  if (window.lucide) lucide.createIcons();
+}
+window.addPlan = () => { plans.push('Day '+(plans.length+1)+': '); localStorage.setItem('gg-plans',JSON.stringify(plans)); renderPlans(); };
+renderPlans();
+GG.boot('');
+</script>
+<style>@media(max-width:860px){ #dashGrid,#dashGrid2{grid-template-columns:1fr !important}}</style>
+</body></html>

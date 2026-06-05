@@ -1,0 +1,112 @@
+
+
+
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Find Guides — GuideGo</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@600;700;800&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script><script>tailwind.config={darkMode:'class'}</script>
+<link rel="stylesheet" href="https://unpkg.com/aos@2.3.4/dist/aos.css"/>
+<link rel="stylesheet" href="style.css"/>
+<link rel="icon" type="image/x-icon" href="logo2.png">
+<script src="theme.js"></script>
+</head>
+<body>
+<section style="padding:30px 0 10px">
+  <div class="container-x">
+    <h1 style="font-family:'Space Grotesk';font-size:2.4rem;font-weight:800" data-reveal>Verified local guides</h1>
+    <p style="color:var(--text-soft);margin-top:6px" data-reveal>Background-checked, multilingual experts ready to host you.</p>
+  </div>
+</section>
+
+<section style="padding:20px 0 60px">
+  <div class="container-x" style="display:grid;grid-template-columns:280px 1fr;gap:24px" id="layout">
+    <aside class="glass" style="padding:20px;align-self:start;position:sticky;top:90px" data-reveal>
+      <h3 style="font-weight:700;margin-bottom:12px">Filters</h3>
+      <div style="margin-bottom:14px">
+        <label style="font-size:.75rem;color:var(--text-soft);font-weight:600">Language</label>
+        <select id="fLang" class="input" style="padding:.55rem .8rem;margin-top:6px"><option value="">All</option></select>
+      </div>
+      <div style="margin-bottom:14px">
+        <label style="font-size:.75rem;color:var(--text-soft);font-weight:600">Category</label>
+        <select id="fCat" class="input" style="padding:.55rem .8rem;margin-top:6px"><option value="">All</option></select>
+      </div>
+      <div style="margin-bottom:14px">
+        <label style="font-size:.75rem;color:var(--text-soft);font-weight:600">Min rating</label>
+        <select id="fRating" class="input" style="padding:.55rem .8rem;margin-top:6px"><option value="0">Any</option><option value="4.5">4.5+</option><option value="4.8">4.8+</option></select>
+      </div>
+      <div style="margin-bottom:14px">
+        <label style="font-size:.75rem;color:var(--text-soft);font-weight:600">Max price / day</label>
+        <input id="fPrice" type="range" min="500" max="3000" value="3000" step="100" style="width:100%"/>
+        <div style="font-size:.78rem;color:var(--text-soft);text-align:right" id="fPriceLbl">₹3,000</div>
+      </div>
+      <button class="btn btn-ghost btn-sm" onclick="resetFilters()" style="width:100%;justify-content:center">Reset</button>
+    </aside>
+
+    <div>
+      <div class="glass" style="padding:12px;display:flex;align-items:center;gap:10px;margin-bottom:16px">
+        <div class="neo-inset" style="padding:.5rem .8rem;display:flex;align-items:center;gap:.5rem;flex:1"><i data-lucide="search" style="width:16px;height:16px;color:var(--primary)"></i><input id="fQ" class="bg-transparent outline-none w-full text-sm" placeholder="Search by name or city..."/></div>
+        <button class="btn btn-neo btn-sm" title="Voice"><i data-lucide="mic" style="width:14px;height:14px"></i></button>
+      </div>
+      <div id="guideGrid" data-stagger style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:18px"></div>
+    </div>
+  </div>
+</section>
+
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+<script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="script.js"></script><script src="chatbot.js"></script><script src="animations.js"></script>
+<script>
+const fLang = document.getElementById('fLang'), fCat=document.getElementById('fCat'), fRating=document.getElementById('fRating'), fPrice=document.getElementById('fPrice'), fQ=document.getElementById('fQ');
+GG.indianLanguages.forEach(l => fLang.insertAdjacentHTML('beforeend',`<option>${l}</option>`));
+GG.categories.forEach(c => fCat.insertAdjacentHTML('beforeend',`<option>${c}</option>`));
+
+function render(list){
+  document.getElementById('guideGrid').innerHTML = list.map(g=>{
+    const pct = g.booked/g.capacity*100;
+    return `<div class="card">
+      <div style="padding:18px;display:flex;align-items:center;gap:12px;border-bottom:1px solid var(--border)">
+        <img src="${g.img}" style="width:64px;height:64px;border-radius:50%;object-fit:cover;border:2px solid var(--primary)"/>
+        <div style="flex:1">
+          <div style="font-weight:800;display:flex;align-items:center;gap:.4rem">${g.name} ${g.verified?'<span class="badge badge-verified" style="font-size:.6rem">✓ Verified</span>':''}</div>
+          <div style="font-size:.78rem;color:var(--text-soft)">${g.city} • ${g.exp} yrs exp.</div>
+          <div style="font-size:.8rem;margin-top:2px">⭐ ${g.rating} <span style="color:var(--text-soft)">(${g.reviews})</span></div>
+        </div>
+      </div>
+      <div style="padding:14px 18px">
+        <div style="font-size:.82rem;color:var(--text-soft);margin-bottom:6px"><b style="color:var(--text)">${g.specialty}</b></div>
+        <div style="display:flex;flex-wrap:wrap;gap:4px;margin-bottom:10px">${g.languages.map(l=>`<span class="badge">${l}</span>`).join('')}</div>
+        <div class="progress"><span style="width:${pct}%"></span></div>
+        <div style="display:flex;justify-content:space-between;font-size:.72rem;color:var(--text-soft);margin-top:4px"><span>${g.booked}/${g.capacity} booked</span><span>${g.capacity-g.booked} left</span></div>
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-top:14px">
+          <div><span style="font-weight:800;color:var(--primary);font-size:1.1rem">${GG.INR(g.price)}</span><span style="font-size:.75rem;color:var(--text-soft)">/day</span></div>
+          <div style="display:flex;gap:6px"><a href="guide-profile.html?id=${g.id}" class="btn btn-neo btn-sm">View</a><a href="booking.html?guide=${g.id}" class="btn btn-primary btn-sm">Book</a></div>
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+  if (window.lucide) lucide.createIcons();
+}
+function apply(){
+  const q = (fQ.value||'').toLowerCase();
+  const filt = GG.guides.filter(g => 
+    (!q || g.name.toLowerCase().includes(q) || g.city.toLowerCase().includes(q)) &&
+    (!fLang.value || g.languages.includes(fLang.value)) &&
+    (!fCat.value || g.category===fCat.value) &&
+    g.rating >= +fRating.value &&
+    g.price <= +fPrice.value
+  );
+  render(filt);
+}
+function resetFilters(){ fLang.value=''; fCat.value=''; fRating.value='0'; fPrice.value=3000; fQ.value=''; document.getElementById('fPriceLbl').textContent='₹3,000'; apply(); }
+[fLang,fCat,fRating,fQ].forEach(e=>e.addEventListener('input',apply));
+fPrice.addEventListener('input',()=>{ document.getElementById('fPriceLbl').textContent=GG.INR(fPrice.value); apply(); });
+render(GG.guides);
+GG.boot('guides');
+</script>
+<style>@media(max-width:860px){ #layout{grid-template-columns:1fr !important} aside{position:static !important} }</style>
+</body></html>

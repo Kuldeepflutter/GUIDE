@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Guide Dashboard — GuideGo</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@600;700;800&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script><script>tailwind.config={darkMode:'class'}</script>
+<link rel="stylesheet" href="https://unpkg.com/aos@2.3.4/dist/aos.css"/>
+<link rel="stylesheet" href="style.css"/>
+<script src="theme.js"></script>
+</head>
+<body>
+<section style="padding:30px 0 60px">
+  <div class="container-x">
+    <h1 style="font-family:'Space Grotesk';font-size:2.2rem;font-weight:800" data-reveal>Guide command center</h1>
+    <p style="color:var(--text-soft)">Manage availability, requests, and earnings.</p>
+
+    <div data-stagger style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px;margin-top:24px">
+      <div class="glass" style="padding:18px"><div style="font-size:.78rem;color:var(--text-soft)">Earnings (month)</div><div style="font-family:'Space Grotesk';font-size:1.8rem;font-weight:800;color:var(--accent)" id="earnMonth"></div></div>
+      <div class="glass" style="padding:18px"><div style="font-size:.78rem;color:var(--text-soft)">This week</div><div style="font-family:'Space Grotesk';font-size:1.8rem;font-weight:800" id="earnWeek"></div></div>
+      <div class="glass" style="padding:18px"><div style="font-size:.78rem;color:var(--text-soft)">Pending requests</div><div style="font-family:'Space Grotesk';font-size:1.8rem;font-weight:800;color:var(--warm)">2</div></div>
+      <div class="glass" style="padding:18px"><div style="font-size:.78rem;color:var(--text-soft)">Avg. rating</div><div style="font-family:'Space Grotesk';font-size:1.8rem;font-weight:800">4.9 ★</div></div>
+    </div>
+
+    <div style="display:grid;grid-template-columns:1fr 360px;gap:20px;margin-top:24px" id="gdGrid">
+      <!-- Requests -->
+      <div class="glass" style="padding:24px" data-reveal>
+        <h3 style="font-weight:700;margin-bottom:14px">Booking requests</h3>
+        <div id="reqList" style="display:grid;gap:10px"></div>
+      </div>
+
+      <!-- Capacity -->
+      <div class="glass" style="padding:24px" data-reveal>
+        <h3 style="font-weight:700;margin-bottom:10px">Capacity settings</h3>
+        <label style="font-size:.78rem;color:var(--text-soft)">Max group size per tour</label>
+        <input id="capSlider" type="range" min="5" max="40" value="25" style="width:100%;margin-top:6px"/>
+        <div style="text-align:right;font-weight:700" id="capLbl">25 travelers</div>
+        <div class="divider"></div>
+        <label style="font-size:.78rem;color:var(--text-soft)">Daily rate (₹)</label>
+        <input id="rateInp" class="input" type="number" value="1499" style="margin-top:6px"/>
+        <button class="btn btn-primary btn-sm" style="margin-top:12px;width:100%;justify-content:center" onclick="GG.toast('Settings saved')">Save</button>
+      </div>
+    </div>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:20px" id="gdGrid2">
+      <!-- Earnings chart -->
+      <div class="glass" style="padding:24px" data-reveal>
+        <h3 style="font-weight:700;margin-bottom:14px">Earnings (last 12 weeks)</h3>
+        <svg id="chart" viewBox="0 0 320 140" style="width:100%;height:160px"></svg>
+      </div>
+
+      <!-- Availability toggle -->
+      <div class="glass" style="padding:24px" data-reveal>
+        <h3 style="font-weight:700;margin-bottom:14px">Availability</h3>
+        <div style="display:grid;grid-template-columns:repeat(7,1fr);gap:6px">
+          ${['M','T','W','T','F','S','S'].map((d,i)=>`<button class="btn btn-neo btn-sm" id="day${i}" onclick="toggleDay(${i})" style="justify-content:center;flex-direction:column;padding:.6rem">${d}<span style="font-size:.62rem;color:var(--accent)" id="dayS${i}">ON</span></button>`).join('')}
+        </div>
+        <div class="divider"></div>
+        <div style="display:flex;justify-content:space-between;align-items:center">
+          <div><b>Block date</b><div style="font-size:.74rem;color:var(--text-soft)">Mark a date as leave</div></div>
+          <input class="input" type="date" style="width:160px;padding:.5rem .7rem"/>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+<script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="script.js"></script><script src="chatbot.js"></script><script src="dashboard.js"></script><script src="animations.js"></script>
+<script>
+document.getElementById('earnMonth').textContent = GG.INR(GG_dashboard.earnings.month);
+document.getElementById('earnWeek').textContent  = GG.INR(GG_dashboard.earnings.week);
+document.getElementById('reqList').innerHTML = GG_dashboard.guideBookings.map((b,i)=>`
+  <div class="card" style="padding:14px;display:flex;align-items:center;gap:12px">
+    <div style="width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,var(--primary),var(--primary-2));color:#fff;display:grid;place-items:center;font-weight:700">${b.traveler[0]}</div>
+    <div style="flex:1"><b>${b.traveler}</b><div style="font-size:.76rem;color:var(--text-soft)">${b.date} • ${b.size} travelers</div></div>
+    ${b.status==='accepted' 
+      ? `<span class="badge" style="background:rgba(16,185,129,.15);color:var(--accent);border-color:transparent">Accepted</span>`
+      : `<button class="btn btn-ghost btn-sm" onclick="GG.toast('Declined','info')">Decline</button><button class="btn btn-primary btn-sm" onclick="GG.toast('Accepted')">Accept</button>`}
+  </div>`).join('');
+
+document.getElementById('capSlider').addEventListener('input',e=>document.getElementById('capLbl').textContent=e.target.value+' travelers');
+
+// Chart
+const data = GG_dashboard.earnings.trend;
+const max = Math.max(...data);
+const w = 320, h = 140, step = w/(data.length-1);
+const pts = data.map((v,i)=>`${i*step},${h - (v/max)*110 - 10}`).join(' ');
+const area = `M0,${h} L${pts.split(' ').join(' L')} L${w},${h} Z`;
+document.getElementById('chart').innerHTML = `
+  <defs><linearGradient id="g" x1="0" x2="0" y1="0" y2="1"><stop offset="0%" stop-color="var(--primary)" stop-opacity=".5"/><stop offset="100%" stop-color="var(--primary)" stop-opacity="0"/></linearGradient></defs>
+  <path d="${area}" fill="url(#g)"/>
+  <polyline points="${pts}" fill="none" stroke="var(--primary)" stroke-width="2.5" stroke-linejoin="round"/>
+  ${data.map((v,i)=>`<circle cx="${i*step}" cy="${h - (v/max)*110 - 10}" r="3" fill="var(--primary)"/>`).join('')}`;
+
+const dayOn = [true,true,true,true,true,true,false];
+function paintDays(){ dayOn.forEach((on,i)=>{ const el=document.getElementById('dayS'+i); if(el){ el.textContent=on?'ON':'OFF'; el.style.color=on?'var(--accent)':'var(--muted)'; }}); }
+window.toggleDay = i => { dayOn[i]=!dayOn[i]; paintDays(); };
+paintDays();
+GG.boot('');
+</script>
+<style>@media(max-width:860px){ #gdGrid,#gdGrid2{grid-template-columns:1fr !important}}</style>
+</body></html>

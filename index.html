@@ -1,0 +1,215 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>GuideGo — Explore India With Verified Local Guides</title>
+<meta name="description" content="India's trusted marketplace for verified local travel guides. Discover destinations, book guides, and create unforgettable journeys."/>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@600;700;800&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
+<script>tailwind.config={darkMode:'class'}</script>
+<link rel="stylesheet" href="https://unpkg.com/aos@2.3.4/dist/aos.css"/>
+<link rel="stylesheet" href="style.css"/>
+<script src="theme.js"></script>
+</head>
+<body>
+
+<!-- HERO -->
+<section class="hero" style="padding:24px 0 80px">
+  <div class="container-x" style="position:relative;z-index:2">
+    <div style="display:grid;grid-template-columns:1.1fr .9fr;gap:50px;align-items:center;padding-top:60px" id="heroGrid">
+      <div>
+        <span class="badge" data-reveal data-reveal-once><i data-lucide="sparkles" style="width:12px;height:12px;color:var(--primary)"></i> India's #1 verified guide marketplace</span>
+        <h1 data-hero-title style="font-family:'Space Grotesk',sans-serif;font-size:clamp(2.4rem,5vw,4.2rem);line-height:1.05;letter-spacing:-.02em;font-weight:800;margin:18px 0 16px">
+          Explore India With <span class="text-gradient">Verified Local Guides</span>
+        </h1>
+        <p data-hero-sub style="font-size:1.1rem;color:var(--text-soft);max-width:560px;line-height:1.55">
+          Find trusted guides, discover hidden gems, and create unforgettable journeys across India — from Himalayan trails to coastal villages.
+        </p>
+        <div data-hero-cta style="display:flex;gap:12px;margin-top:26px;flex-wrap:wrap">
+          <a href="guides.html" class="btn btn-primary"><i data-lucide="search" style="width:16px;height:16px"></i> Find Guides</a>
+          <a href="destinations.html" class="btn btn-neo"><i data-lucide="map-pin" style="width:16px;height:16px"></i> Explore Destinations</a>
+        </div>
+
+        <!-- Smart search -->
+        <div class="glass" style="margin-top:32px;padding:14px;display:grid;grid-template-columns:1.4fr 1fr 1fr auto;gap:10px;align-items:center" data-reveal>
+          <div class="neo-inset" style="padding:.4rem .8rem;display:flex;align-items:center;gap:.5rem">
+            <i data-lucide="map-pin" style="width:16px;height:16px;color:var(--primary)"></i>
+            <input class="bg-transparent outline-none w-full text-sm" placeholder="Where to? (e.g. Manali)"/>
+          </div>
+          <div class="neo-inset" style="padding:.4rem .8rem;display:flex;align-items:center;gap:.5rem">
+            <i data-lucide="calendar" style="width:16px;height:16px;color:var(--primary)"></i>
+            <input type="date" class="bg-transparent outline-none w-full text-sm"/>
+          </div>
+          <div class="neo-inset" style="padding:.4rem .8rem;display:flex;align-items:center;gap:.5rem">
+            <i data-lucide="users" style="width:16px;height:16px;color:var(--primary)"></i>
+            <select class="bg-transparent outline-none w-full text-sm"><option>2 Travelers</option><option>1 Traveler</option><option>3+</option></select>
+          </div>
+          <a href="guides.html" class="btn btn-primary"><i data-lucide="arrow-right" style="width:16px;height:16px"></i></a>
+        </div>
+
+        <div style="display:flex;gap:30px;margin-top:32px;flex-wrap:wrap">
+          <div data-hero-stat><div style="font-family:'Space Grotesk';font-size:1.8rem;font-weight:800">5,200+</div><div style="font-size:.82rem;color:var(--text-soft)">Verified guides</div></div>
+          <div data-hero-stat><div style="font-family:'Space Grotesk';font-size:1.8rem;font-weight:800">120+</div><div style="font-size:.82rem;color:var(--text-soft)">Destinations</div></div>
+          <div data-hero-stat><div style="font-family:'Space Grotesk';font-size:1.8rem;font-weight:800">4.9 ★</div><div style="font-size:.82rem;color:var(--text-soft)">Avg. rating</div></div>
+        </div>
+      </div>
+
+      <div style="position:relative;height:520px" class="hidden md:block">
+        <div data-parallax style="position:absolute;top:0;left:0;width:280px;height:340px;border-radius:24px;overflow:hidden;box-shadow:var(--shadow-pop)" class="float-y">
+          <img src="https://images.unsplash.com/photo-1599661046289-e31897846e41?w=600&q=80" style="width:100%;height:100%;object-fit:cover"/>
+        </div>
+        <div style="position:absolute;top:80px;right:0;width:240px;height:300px;border-radius:24px;overflow:hidden;box-shadow:var(--shadow-pop)" class="float-y delay">
+          <img src="https://images.unsplash.com/photo-1589793907316-f94025b46850?w=600&q=80" style="width:100%;height:100%;object-fit:cover"/>
+        </div>
+        <div style="position:absolute;bottom:0;left:60px;width:220px;height:180px;border-radius:24px;overflow:hidden;box-shadow:var(--shadow-pop)" class="float-y">
+          <img src="https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?w=500&q=80" style="width:100%;height:100%;object-fit:cover"/>
+        </div>
+        <div class="glass" style="position:absolute;bottom:30px;right:20px;padding:14px 16px;display:flex;align-items:center;gap:10px;animation:floatY 5s ease-in-out infinite">
+          <img src="https://i.pravatar.cc/100?img=12" style="width:38px;height:38px;border-radius:50%;border:2px solid var(--primary)"/>
+          <div>
+            <div style="font-weight:700;font-size:.85rem;display:flex;align-items:center;gap:.3rem">Arjun S. <span class="badge badge-verified" style="font-size:.55rem">✓</span></div>
+            <div style="font-size:.7rem;color:var(--accent)">● Available now</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURED DESTINATIONS -->
+<section style="padding:80px 0">
+  <div class="container-x">
+    <div style="display:flex;justify-content:space-between;align-items:end;margin-bottom:30px;flex-wrap:wrap;gap:14px">
+      <div data-aos="fade-up">
+        <span class="badge"><i data-lucide="map" style="width:12px;height:12px;color:var(--primary)"></i> Featured destinations</span>
+        <h2 style="font-family:'Space Grotesk';font-size:2.4rem;font-weight:800;margin-top:10px;line-height:1.1">Discover India's most loved places</h2>
+      </div>
+      <a href="destinations.html" class="btn btn-ghost btn-sm">View all <i data-lucide="arrow-right" style="width:14px;height:14px"></i></a>
+    </div>
+    <div data-stagger style="display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:20px" id="ggDestGrid"></div>
+  </div>
+</section>
+
+<!-- CATEGORIES -->
+<section style="padding:40px 0">
+  <div class="container-x">
+    <div data-aos="fade-up">
+      <span class="badge"><i data-lucide="layout-grid" style="width:12px;height:12px;color:var(--primary)"></i> Categories</span>
+      <h2 style="font-family:'Space Grotesk';font-size:2rem;font-weight:800;margin:10px 0 24px">Pick your travel style</h2>
+    </div>
+    <div data-stagger style="display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:14px">
+      <a href="destinations.html" class="card" style="padding:24px;text-align:center"><div style="font-size:2rem">🏔️</div><div style="font-weight:700;margin-top:6px">Adventure</div><div style="font-size:.75rem;color:var(--text-soft)">Trek · Raft · Ski</div></a>
+      <a href="destinations.html" class="card" style="padding:24px;text-align:center"><div style="font-size:2rem">🛕</div><div style="font-weight:700;margin-top:6px">Religious</div><div style="font-size:.75rem;color:var(--text-soft)">Temples · Pilgrimage</div></a>
+      <a href="destinations.html" class="card" style="padding:24px;text-align:center"><div style="font-size:2rem">🏰</div><div style="font-weight:700;margin-top:6px">Heritage</div><div style="font-size:.75rem;color:var(--text-soft)">Forts · Palaces</div></a>
+      <a href="destinations.html" class="card" style="padding:24px;text-align:center"><div style="font-size:2rem">🐅</div><div style="font-weight:700;margin-top:6px">Wildlife</div><div style="font-size:.75rem;color:var(--text-soft)">Safaris · Reserves</div></a>
+      <a href="destinations.html" class="card" style="padding:24px;text-align:center"><div style="font-size:2rem">💎</div><div style="font-weight:700;margin-top:6px">Luxury</div><div style="font-size:.75rem;color:var(--text-soft)">Resorts · Spas</div></a>
+      <a href="destinations.html" class="card" style="padding:24px;text-align:center"><div style="font-size:2rem">🎒</div><div style="font-weight:700;margin-top:6px">Budget</div><div style="font-size:.75rem;color:var(--text-soft)">Backpacking</div></a>
+      <a href="destinations.html" class="card" style="padding:24px;text-align:center"><div style="font-size:2rem">👨‍👩‍👧</div><div style="font-weight:700;margin-top:6px">Family</div><div style="font-size:.75rem;color:var(--text-soft)">Kid friendly</div></a>
+      <a href="destinations.html" class="card" style="padding:24px;text-align:center"><div style="font-size:2rem">🥾</div><div style="font-weight:700;margin-top:6px">Trekking</div><div style="font-size:.75rem;color:var(--text-soft)">Himalayan trails</div></a>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section style="padding:80px 0">
+  <div class="container-x">
+    <div style="text-align:center;max-width:680px;margin:0 auto 40px" data-aos="fade-up">
+      <span class="badge"><i data-lucide="zap" style="width:12px;height:12px;color:var(--primary)"></i> How it works</span>
+      <h2 style="font-family:'Space Grotesk';font-size:2.4rem;font-weight:800;margin-top:10px">Three steps to your perfect trip</h2>
+    </div>
+    <div data-stagger style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px">
+      <div class="glass" style="padding:28px"><div style="width:48px;height:48px;border-radius:14px;background:linear-gradient(135deg,var(--primary),var(--primary-2));display:grid;place-items:center;color:#fff;font-weight:800;font-size:1.2rem">1</div><h3 style="font-weight:700;font-size:1.15rem;margin:14px 0 6px">Browse & compare</h3><p style="color:var(--text-soft);font-size:.92rem;line-height:1.5">Filter by language, budget, rating and category. Read verified reviews from real travelers.</p></div>
+      <div class="glass" style="padding:28px"><div style="width:48px;height:48px;border-radius:14px;background:linear-gradient(135deg,var(--primary-2),var(--accent));display:grid;place-items:center;color:#fff;font-weight:800;font-size:1.2rem">2</div><h3 style="font-weight:700;font-size:1.15rem;margin:14px 0 6px">Book in seconds</h3><p style="color:var(--text-soft);font-size:.92rem;line-height:1.5">Pick a date, time slot and group size. Pay securely via UPI, cards or wallets.</p></div>
+      <div class="glass" style="padding:28px"><div style="width:48px;height:48px;border-radius:14px;background:linear-gradient(135deg,var(--accent),var(--warm));display:grid;place-items:center;color:#fff;font-weight:800;font-size:1.2rem">3</div><h3 style="font-weight:700;font-size:1.15rem;margin:14px 0 6px">Travel safely</h3><p style="color:var(--text-soft);font-size:.92rem;line-height:1.5">Real-time chat, SOS button, women-safety indicators and 24/7 support.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- SAFETY -->
+<section style="padding:60px 0">
+  <div class="container-x">
+    <div class="glass" style="padding:40px;display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center" id="safetyBlock">
+      <div data-aos="fade-right">
+        <span class="badge"><i data-lucide="shield-check" style="width:12px;height:12px;color:var(--accent)"></i> Safety first</span>
+        <h2 style="font-family:'Space Grotesk';font-size:2rem;font-weight:800;margin:10px 0">Built for safe Indian travel</h2>
+        <p style="color:var(--text-soft);line-height:1.6;margin-bottom:18px">Every guide is background-verified. Every booking includes emergency SOS, nearby hospital & police lookup, and women-safety indicators.</p>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+          <div style="display:flex;align-items:center;gap:.5rem"><span class="badge badge-verified">✓</span> Verified Guides</div>
+          <div style="display:flex;align-items:center;gap:.5rem"><span class="badge badge-women">♀</span> Women-friendly</div>
+          <div style="display:flex;align-items:center;gap:.5rem"><i data-lucide="phone" style="width:14px;height:14px;color:var(--danger)"></i> 24/7 SOS</div>
+          <div style="display:flex;align-items:center;gap:.5rem"><i data-lucide="hospital" style="width:14px;height:14px;color:var(--primary)"></i> Hospital lookup</div>
+        </div>
+      </div>
+      <div data-aos="fade-left">
+        <div class="map-shell">
+          <div class="map-pin" style="top:30%;left:25%"></div>
+          <div class="map-pin" style="top:55%;left:55%"></div>
+          <div class="map-pin" style="top:40%;left:75%"></div>
+          <div class="glass" style="position:absolute;bottom:14px;left:14px;padding:10px 14px;font-size:.8rem;font-weight:600">📍 Live guide locations</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STUDENT -->
+<section style="padding:60px 0" id="about">
+  <div class="container-x">
+    <div data-aos="fade-up" style="text-align:center;max-width:600px;margin:0 auto 30px">
+      <span class="badge"><i data-lucide="graduation-cap" style="width:12px;height:12px;color:var(--primary)"></i> For students</span>
+      <h2 style="font-family:'Space Grotesk';font-size:2rem;font-weight:800;margin-top:10px">Travel more, spend less</h2>
+    </div>
+    <div data-stagger style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px">
+      <div class="card" style="padding:22px"><i data-lucide="piggy-bank" style="width:22px;height:22px;color:var(--primary)"></i><h3 style="font-weight:700;margin-top:10px">Budget Planner</h3><p style="color:var(--text-soft);font-size:.86rem;margin-top:4px">Daily breakdowns under ₹1,000.</p></div>
+      <div class="card" style="padding:22px"><i data-lucide="tag" style="width:22px;height:22px;color:var(--accent)"></i><h3 style="font-weight:700;margin-top:10px">Student Discounts</h3><p style="color:var(--text-soft);font-size:.86rem;margin-top:4px">Up to 25% off with valid ID.</p></div>
+      <div class="card" style="padding:22px"><i data-lucide="bed" style="width:22px;height:22px;color:var(--warm)"></i><h3 style="font-weight:700;margin-top:10px">Hostels Nearby</h3><p style="color:var(--text-soft);font-size:.86rem;margin-top:4px">Verified hostel partners.</p></div>
+      <div class="card" style="padding:22px"><i data-lucide="route" style="width:22px;height:22px;color:var(--primary-2)"></i><h3 style="font-weight:700;margin-top:10px">Backpacking Routes</h3><p style="color:var(--text-soft);font-size:.86rem;margin-top:4px">Curated multi-city loops.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section style="padding:60px 0" id="contact">
+  <div class="container-x">
+    <div class="glass" style="padding:50px;text-align:center;background:linear-gradient(135deg,rgba(14,165,233,.18),rgba(167,139,250,.18))" data-aos="zoom-in">
+      <h2 style="font-family:'Space Grotesk';font-size:2.4rem;font-weight:800;line-height:1.1">Ready to plan your next trip?</h2>
+      <p style="color:var(--text-soft);margin:14px auto 24px;max-width:520px">Join 200,000+ Indian travelers who trust GuideGo for memorable, safe and local-first experiences.</p>
+      <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap">
+        <a href="signup.html" class="btn btn-primary"><i data-lucide="rocket" style="width:16px;height:16px"></i> Get started free</a>
+        <a href="guides.html" class="btn btn-neo">Browse guides</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+<script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="script.js"></script>
+<script src="chatbot.js"></script>
+<script src="animations.js"></script>
+<script>
+  // Render destinations
+  document.getElementById('ggDestGrid').innerHTML = GG.destinations.map(d=>`
+    <a href="destinations.html" class="card" data-reveal>
+      <div style="position:relative;height:200px;overflow:hidden">
+        <img src="${d.img}" style="width:100%;height:100%;object-fit:cover;transition:transform .6s" onmouseover="this.style.transform='scale(1.08)'" onmouseout="this.style.transform='scale(1)'"/>
+        <div style="position:absolute;inset:0;background:linear-gradient(180deg,transparent 50%,rgba(0,0,0,.6))"></div>
+        <div style="position:absolute;top:12px;left:12px"><span class="badge" style="background:rgba(255,255,255,.9);color:#0b1a2b">⭐ ${d.rating}</span></div>
+        <div style="position:absolute;bottom:12px;left:14px;right:14px;color:#fff">
+          <div style="font-family:'Space Grotesk';font-weight:800;font-size:1.25rem">${d.name}</div>
+          <div style="font-size:.78rem;opacity:.9">${d.state} • Best: ${d.season}</div>
+        </div>
+      </div>
+      <div style="padding:14px;display:flex;justify-content:space-between;align-items:center">
+        <div style="display:flex;gap:6px;flex-wrap:wrap">${d.tags.slice(0,2).map(t=>`<span class="badge">${t}</span>`).join('')}</div>
+        <div style="font-weight:700;color:var(--primary)">${GG.INR(d.cost)}</div>
+      </div>
+    </a>`).join('');
+  GG.boot('home');
+</script>
+</body>
+</html>

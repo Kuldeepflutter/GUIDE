@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Guide Profile — GuideGo</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@600;700;800&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script><script>tailwind.config={darkMode:'class'}</script>
+<link rel="stylesheet" href="https://unpkg.com/aos@2.3.4/dist/aos.css"/>
+<link rel="stylesheet" href="style.css"/>
+<script src="theme.js"></script>
+</head>
+<body>
+<section style="padding:30px 0 60px">
+  <div class="container-x" id="root"></div>
+</section>
+
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+<script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="script.js"></script><script src="chatbot.js"></script><script src="animations.js"></script>
+<script>
+const id = new URLSearchParams(location.search).get('id') || 'g1';
+const g = GG.guides.find(x=>x.id===id) || GG.guides[0];
+const pct = g.booked/g.capacity*100;
+const reviews = [
+  { name:'Aman Verma', stars:5, text:'Phenomenal experience! Incredibly knowledgeable and so warm. Will book again.', when:'2 weeks ago' },
+  { name:'Sneha Rao', stars:5, text:'Felt safe and welcomed throughout. Loved the off-beat spots.', when:'1 month ago' },
+  { name:'Karan Mehta', stars:4, text:'Great storyteller. A bit pricey but worth it.', when:'2 months ago' },
+];
+document.getElementById('root').innerHTML = `
+<div class="glass" style="padding:24px;display:grid;grid-template-columns:auto 1fr auto;gap:24px;align-items:center" data-reveal>
+  <img src="${g.img}" style="width:120px;height:120px;border-radius:50%;object-fit:cover;border:3px solid var(--primary);box-shadow:var(--shadow-pop)"/>
+  <div>
+    <h1 style="font-family:'Space Grotesk';font-size:2rem;font-weight:800;display:flex;align-items:center;gap:.5rem">${g.name} ${g.verified?'<span class="badge badge-verified">✓ Verified</span>':''}</h1>
+    <div style="color:var(--text-soft);margin-top:4px">${g.specialty} • ${g.city}, ${g.exp} years experience</div>
+    <div style="display:flex;gap:14px;margin-top:10px;flex-wrap:wrap;font-size:.85rem">
+      <span>⭐ <b>${g.rating}</b> (${g.reviews} reviews)</span>
+      <span>🎒 ${g.tours} tours completed</span>
+      <span>🗣️ ${g.languages.join(', ')}</span>
+    </div>
+  </div>
+  <div style="text-align:right">
+    <div style="font-size:.78rem;color:var(--text-soft)">From</div>
+    <div style="font-family:'Space Grotesk';font-size:2rem;font-weight:800;color:var(--primary)">${GG.INR(g.price)}</div>
+    <a href="booking.html?guide=${g.id}" class="btn btn-primary" style="margin-top:8px">Book Guide</a>
+  </div>
+</div>
+
+<div style="display:grid;grid-template-columns:1fr 340px;gap:24px;margin-top:24px" id="grid">
+  <div>
+    <div class="glass" style="padding:6px;display:flex;gap:4px;margin-bottom:16px" data-reveal>
+      ${['about','reviews','availability','pricing','gallery'].map((t,i)=>`<button class="btn btn-sm ${i===0?'btn-primary':'btn-ghost'}" onclick="showTab('${t}',this)" style="flex:1;text-transform:capitalize">${t}</button>`).join('')}
+    </div>
+
+    <div data-tab="about" class="glass" style="padding:24px" data-reveal>
+      <h3 style="font-weight:700;margin-bottom:10px">About ${g.name.split(' ')[0]}</h3>
+      <p style="color:var(--text-soft);line-height:1.7">Born and raised in ${g.city}, ${g.name.split(' ')[0]} has spent ${g.exp} years guiding travelers through the soul of India. Specializing in ${g.specialty.toLowerCase()}, every tour is crafted to feel personal — small groups, hidden gems, and a deep love for storytelling.</p>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;margin-top:18px">
+        <div class="neo" style="padding:14px"><div style="font-size:.72rem;color:var(--text-soft)">Certifications</div><b>Govt. of India Licensed</b></div>
+        <div class="neo" style="padding:14px"><div style="font-size:.72rem;color:var(--text-soft)">Response time</div><b>~ 8 minutes</b></div>
+        <div class="neo" style="padding:14px"><div style="font-size:.72rem;color:var(--text-soft)">Cancellation</div><b>Free 48h before</b></div>
+      </div>
+    </div>
+
+    <div data-tab="reviews" class="glass" style="padding:24px;display:none">
+      <h3 style="font-weight:700;margin-bottom:14px">Traveler reviews</h3>
+      ${reviews.map(r=>`<div style="padding:14px 0;border-bottom:1px solid var(--border)">
+        <div style="display:flex;justify-content:space-between"><b>${r.name}</b><span style="color:var(--warm)">${'★'.repeat(r.stars)}${'☆'.repeat(5-r.stars)}</span></div>
+        <div style="font-size:.72rem;color:var(--text-soft);margin-bottom:6px">${r.when}</div>
+        <p style="color:var(--text-soft);line-height:1.5">${r.text}</p></div>`).join('')}
+    </div>
+
+    <div data-tab="availability" class="glass" style="padding:24px;display:none">
+      <h3 style="font-weight:700;margin-bottom:14px">Availability calendar</h3>
+      <p style="color:var(--text-soft);font-size:.88rem;margin-bottom:10px">Pick a date during checkout to see live slots.</p>
+      <a href="booking.html?guide=${g.id}" class="btn btn-primary">Check availability</a>
+    </div>
+
+    <div data-tab="pricing" class="glass" style="padding:24px;display:none">
+      <h3 style="font-weight:700;margin-bottom:14px">Pricing</h3>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
+        <div class="card" style="padding:18px"><div style="font-size:.78rem;color:var(--text-soft)">Shared tour</div><div style="font-size:1.4rem;font-weight:800;color:var(--primary)">${GG.INR(g.price)}</div><div style="font-size:.78rem;color:var(--text-soft)">per traveler / day</div></div>
+        <div class="card" style="padding:18px"><div style="font-size:.78rem;color:var(--text-soft)">Private tour</div><div style="font-size:1.4rem;font-weight:800;color:var(--primary)">${GG.INR(g.price*6)}</div><div style="font-size:.78rem;color:var(--text-soft)">flat rate / day</div></div>
+      </div>
+    </div>
+
+    <div data-tab="gallery" class="glass" style="padding:24px;display:none">
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px">
+        ${[1,2,3,4,5,6].map(i=>`<div style="aspect-ratio:1;background:url(https://picsum.photos/seed/${g.id}${i}/300) center/cover;border-radius:10px"></div>`).join('')}
+      </div>
+    </div>
+  </div>
+
+  <aside>
+    <div class="glass" style="padding:20px;position:sticky;top:90px" data-reveal>
+      <div style="font-weight:700;margin-bottom:8px">Capacity</div>
+      <div class="progress"><span style="width:${pct}%"></span></div>
+      <div style="display:flex;justify-content:space-between;font-size:.78rem;color:var(--text-soft);margin-top:6px"><span>${g.booked} booked</span><span>${g.capacity-g.booked} seats left</span></div>
+      <div class="divider"></div>
+      <div style="font-weight:700;margin-bottom:8px">Trust & safety</div>
+      <div style="display:flex;flex-direction:column;gap:6px;font-size:.82rem">
+        <span><span class="badge badge-verified">✓</span> Govt. verified</span>
+        <span><span class="badge badge-women">♀</span> Women-friendly</span>
+        <span><i data-lucide="shield" style="width:14px;height:14px;color:var(--accent);display:inline"></i> Background-checked</span>
+      </div>
+      <a href="booking.html?guide=${g.id}" class="btn btn-primary" style="width:100%;justify-content:center;margin-top:14px">Book ${g.name.split(' ')[0]}</a>
+      <button class="btn btn-ghost btn-sm" style="width:100%;justify-content:center;margin-top:6px" onclick="GG.toast('Saved to wishlist')"><i data-lucide="heart" style="width:14px;height:14px"></i> Save</button>
+    </div>
+
+    <div class="glass" style="padding:20px;margin-top:16px" data-reveal>
+      <div style="font-weight:700;margin-bottom:10px;display:flex;align-items:center;gap:.4rem"><i data-lucide="message-circle" style="width:16px;height:16px;color:var(--primary)"></i> Message guide</div>
+      <div style="font-size:.72rem;color:var(--accent);display:flex;align-items:center;gap:.3rem;margin-bottom:8px"><span style="width:6px;height:6px;border-radius:50%;background:var(--accent)"></span> Online · typing</div>
+      <textarea class="input" rows="3" placeholder="Hi! I'm planning a 3-day visit..."></textarea>
+      <button class="btn btn-primary btn-sm" style="width:100%;justify-content:center;margin-top:8px" onclick="GG.toast('Message sent')">Send</button>
+    </div>
+  </aside>
+</div>`;
+window.showTab = (t, btn) => {
+  document.querySelectorAll('[data-tab]').forEach(p => p.style.display = (p.dataset.tab===t) ? 'block' : 'none');
+  btn.parentElement.querySelectorAll('button').forEach(b => { b.classList.remove('btn-primary'); b.classList.add('btn-ghost'); });
+  btn.classList.remove('btn-ghost'); btn.classList.add('btn-primary');
+};
+GG.boot('guides');
+</script>
+<style>@media(max-width:860px){ #grid{grid-template-columns:1fr !important} aside .glass{position:static !important}}</style>
+</body></html>
